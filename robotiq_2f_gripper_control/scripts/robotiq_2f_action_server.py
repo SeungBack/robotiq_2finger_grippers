@@ -24,7 +24,7 @@ import rospy
 from robotiq_2f_gripper_control.robotiq_2f_gripper_driver import Robotiq2FingerGripperDriver, Robotiq2FingerSimulatedGripperDriver 
 import actionlib
 from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryResult, FollowJointTrajectoryFeedback, FollowJointTrajectoryGoal
-from robotiq_2f_gripper_msgs.msg import CommandRobotiqGripperFeedback, CommandRobotiqGripperResult, CommandRobotiqGripperAction, CommandRobotiqGripperGoal
+from robotiq_2f_gripper_msgs.msg import CommandRobotiqGripperFeedback, CommandRobotiqGripperResult, CommandRobotiqGripperAction, CommandRobotiqGripperGoal, RobotiqGripperStatus
 
 GOAL_DETECTION_THRESHOLD = 0.05 # Max deviation from target goal to consider as goal "reached"
 
@@ -207,6 +207,8 @@ class CommandGripperActionServer(object):
         self._is_stalled = True
         self._processing_goal = False
 
+
+
 if __name__ == "__main__":
 
     rospy.init_node('robotiq_2f_action_server')
@@ -225,11 +227,13 @@ if __name__ == "__main__":
         gripper_driver = Robotiq2FingerGripperDriver( comport=comport, baud=baud, stroke=stroke, joint_name=joint_name)
     # Start action server 
     server = CommandGripperActionServer(rospy.get_namespace(), 'command_robotiq_action', gripper_driver)
-    
+    pub = rospy.Publisher('robotiq_grippper_status', RobotiqGripperStatus, queue_size=1)
+
     # Send and Request data from gripper and update joint state every `r`[Hz]
     r = rospy.Rate(rospy.get_param('~rate', 50 if not sim else 20))
     while not rospy.is_shutdown():
         gripper_driver.update_driver()
+        pub.publish(gripper_driver.get_current_gripper_status())
         r.sleep()
 
     rospy.spin()

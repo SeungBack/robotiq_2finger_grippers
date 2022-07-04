@@ -26,12 +26,13 @@ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- 
- file   robotiq_2f_gripper_driver.py
-
- brief  Driver for Robotiq 85 communication
+(INCLUDING NEGLIGENCE OR OTHE
+        
+    def shutdown(self):
+        self.client.close()
+    
+    def activate_gripper(self):
+        self.rACT = 1 communication
 
  Platform: Linux/ROS Indigo
 --------------------------------------------------------------------"""
@@ -44,7 +45,7 @@ The end user should not need to use this class direcly since an instance of it i
 controlling a given gripper, and commanded by the user commands puubished by an action client instance.  
 """
 
-from robotiq_2f_gripper import Robotiq2FingerGripper
+from .robotiq_2f_gripper import Robotiq2FingerGripper
 from robotiq_2f_gripper_msgs.msg import RobotiqGripperCommand, RobotiqGripperStatus, CommandRobotiqGripperGoal
 from sensor_msgs.msg import JointState
 import numpy as np

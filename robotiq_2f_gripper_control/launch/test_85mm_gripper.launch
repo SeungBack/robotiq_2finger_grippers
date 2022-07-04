@@ -22,7 +22,7 @@
 
     <param name="robot_description" command="$(find xacro)/xacro $(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model.xacro" />  
 
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+    <node name="gripper_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
         <param name="robot_description" value="robot_description"/>
         <param name="publish_frequency" type="double" value="100.0" />
     </node>
