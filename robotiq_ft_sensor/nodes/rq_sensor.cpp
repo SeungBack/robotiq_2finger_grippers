@@ -264,7 +264,8 @@ int main(int argc, char **argv)
 				wrenchMsg.wrench.torque.y = msgStream.My;
 				wrenchMsg.wrench.torque.z = msgStream.Mz;
 				wrench_pub.publish(wrenchMsg);
-			}
+}				
+
 		}
 
 		ros::spinOnce();
